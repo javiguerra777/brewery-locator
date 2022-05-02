@@ -4,7 +4,6 @@ import { Marker } from 'pigeon-maps';
 //<Marker width={50} anchor={[50, 4]} /> */
 const RenderMarkers = () => {
     const coordElmts = [];
-
     // for (const() of markerCoords){
     //     coordElmts.push(
             // <Marker>
@@ -13,9 +12,7 @@ const RenderMarkers = () => {
             // </Marker>
     //     )
     // }
-
-    return
-
+    return;
 }
 
 export default RenderMarkers;
