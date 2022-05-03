@@ -14,6 +14,7 @@ const Mainpage = () => {
   }
   const submit = (e) => {
     e.preventDefault();
+    localStorage.setItem('location', JSON.stringify(newLocation));
     setLocation(newLocation);
     setNewLocation('');
   }
@@ -29,11 +30,10 @@ const Mainpage = () => {
   //grab data from localstorage
   useEffect(()=> {
     const retrieveLocation = JSON.parse(localStorage.getItem('location'));
+    if(retrieveLocation){
+      setLocation(retrieveLocation);
+    }
   },[])
-  //keep user's search terms stored in localstorage
-  useEffect(()=> {
-    localStorage.setItem('location', JSON.stringify(location))
-  }, [location])
   return (
     <>
     <div className='container'>
