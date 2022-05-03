@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 // import ErrorBoundary from './ErrorBoundary';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Mainpage from './components/Mainpage';
+import Main from './pages/Main';
 
 const root = createRoot(document.getElementById('root'));
 root.render(

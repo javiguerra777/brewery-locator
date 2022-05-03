@@ -1,16 +1,17 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { nanoid } from 'nanoid';
-import './mainpage.css';
+import Maps from '../components/Maps'
+import '../components/mainpage.css';
 
-const Mainpage = () => {
+const Main = () => {
   const [location, setLocation] = useState('Fresno, CA');
   const fixedLocation = location.split(',');
   const [newLocation, setNewLocation] = useState('');
   const [data, setData] = useState([]);
+  const [lng, setLng] = useState(0);
+  const [lat, setLat] = useState(0);
   const breweryUrl = `https://api.openbrewerydb.org/breweries?by_city=${fixedLocation[0]}`;
-  //const [breweries, setBreweries] = useState(data.map((brewery)=> brewery.name));
-  //console.log('Here are the breweries', breweries)
   const handleLocationChange = (e) => {
     setNewLocation(e.target.value);
   }
@@ -27,8 +28,28 @@ const Mainpage = () => {
     .catch((err)=> console.log(err));
 
   }, [location]);
+  //use effect for default center in map component
+  useEffect(() => {
+    if(data.length){
+      //for (const {name, longitude, latitude} of data){
+      let foundLng = '';
+      const allData = data.entries();
+      //loop until find a longitude
+      while (foundLng === ''){
+        let nextData = allData.next().value;
+        let tempLng = parseFloat(nextData[1].longitude);
+        let tempLat = parseFloat(nextData[1].latitude);
+        if (!isNaN(tempLng)){
+          foundLng = tempLng;
+          setLng(tempLng);
+          setLat(tempLat);
+        }
+      }
+    }
+  }, [data, location])
   return (
     <>
+    {(data && lng && lat) && <Maps data={data} lng={lng} lat={lat}></Maps>}
     <div className='container'>
       <div className='header'>
       <h1>Brewery Search For <strong>{location}</strong>:</h1>
@@ -62,4 +83,4 @@ const Mainpage = () => {
   );
 }
 
-export default Mainpage;
+export default Main;
