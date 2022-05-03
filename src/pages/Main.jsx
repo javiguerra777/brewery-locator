@@ -5,11 +5,10 @@ import Breweries from '../components/Breweries';
 import Maps from '../components/Maps';
 import { getBreweries } from '../services/API';
 const Mainpage = () => {
-  const [location, setLocation] = useState('Fresno, CA');
+  const [location, setLocation] = useState(JSON.parse(localStorage.getItem('location')) || 'Fresno, CA');
   const fixedLocation = location.split(',');
   const [newLocation, setNewLocation] = useState('');
   const [data, setData] = useState([]);
-  //const breweryUrl = `https://api.openbrewerydb.org/breweries?by_city=${fixedLocation[0]}`;
   const handleLocationChange = (e) => {
     setNewLocation(e.target.value);
   }
@@ -18,6 +17,7 @@ const Mainpage = () => {
     setLocation(newLocation);
     setNewLocation('');
   }
+  //grab data from API
   useEffect(() => {
     getBreweries(fixedLocation[0])
     .then((response)=>{
@@ -26,6 +26,14 @@ const Mainpage = () => {
     .catch((err)=> console.log(err));
 
   }, [location]);
+  //grab data from localstorage
+  useEffect(()=> {
+    const retrieveLocation = JSON.parse(localStorage.getItem('location'));
+  },[])
+  //keep user's search terms stored in localstorage
+  useEffect(()=> {
+    localStorage.setItem('location', JSON.stringify(location))
+  }, [location])
   return (
     <>
     <div className='container'>
