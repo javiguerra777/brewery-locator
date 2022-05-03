@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { nanoid } from 'nanoid';
 import './mainpage.css';
 
 const Mainpage = () => {
@@ -47,7 +48,7 @@ const Mainpage = () => {
       <code>
         {data.map((brewery)=> {
           return (
-          <div className="card">
+          <div key={nanoid()} className="card">
             <p>{brewery.name}</p>
             <p>{brewery.street} {brewery.city}, {brewery.state}</p>
             <p>{brewery.phone}</p>

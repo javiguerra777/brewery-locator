@@ -1,70 +1,36 @@
-# Getting Started with Create React App
+# Restaurant Locator React Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
+This project has the following requirements:
+- App should use `styled-components` for styling rather than scss/regular css
+- App should use `react-router-dom` for conditional rendering different page elements
+- App should use a React-specific mapping package and load search results onto the map as pushpins
+- App should have a search bar that allows a user to specify a new location to search in. After user search, the map should recenter and show results in the new location
+- Pull data from external API using `axios`, `fetch`, or a similar tool. Make sure that the app runs a search for results in the default location upon render, displays search results, and displays pushpins for those results on the map
+- App should have a separate location details "page" that the user can navigate to by clicking on a search results. This location details component should not receive its data via props and should instead use `useEffect()` to pull location details from the API after initial render
+- Hide an API keys using a `.env` file. Remember to add the `.env` file to the `.gitignore` so that it is not uploaded to GitHub
+- App should have multiple components. Use props to pass data from parent components into child components to allow customization of the child components
+- Make code DRY (Don't Repeat Yourself) as possible 
 
-## Available Scripts
+This project utilizes SASS, JS, and React to run.
 
-In the project directory, you can run:
+## Prerequisites
+- Understanding of React
+- Understanding of SASS
+- Strong understanding of JavaScript
+- Strong understanding of HTML5
 
-### `npm start`
+## Installation
+- [Git](https://git-scm.com/) must be installed
+- Clone repository `git clone git@github.com:javiguerra777/restaurant-locator.git`
+- Text editor or [VS Code](https://code.visualstudio.com/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## License
+- Open Source Code.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Citation
+- Please add a code comment referencing back to this repository when you use this code.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contact
+- Javi Guerra jaguerra@alphaworks.tech 
+- Casey Reyes creyes@alphaworks.tech
