@@ -5,7 +5,7 @@ import Breweries from '../components/Breweries';
 import Maps from '../components/Maps';
 import { getBreweries } from '../services/API';
 const Main = () => {
-  const [location, setLocation] = useState('Fresno, CA');
+  const [location, setLocation] = useState(JSON.parse(localStorage.getItem('location')) ||'Fresno, CA');
   const fixedLocation = location.split(',');
   const [newLocation, setNewLocation] = useState('');
   const [data, setData] = useState([]);
@@ -48,7 +48,7 @@ const Main = () => {
         let nextData = allData.next().value;
         let tempLng = parseFloat(nextData[1].longitude);
         let tempLat = parseFloat(nextData[1].latitude);
-        if (!isNaN(tempLng)){
+        if (!isNaN(tempLng && !isNaN(tempLat))){
           foundLng = tempLng;
           setLng(tempLng);
           setLat(tempLat);
