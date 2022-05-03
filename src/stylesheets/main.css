@@ -2,18 +2,29 @@
   background-color: aliceblue;
   border: 1px black solid;
   border-radius: .5em;
-  width: 75%;
+  cursor: pointer;
 }
+.card:hover {
+  background-color: white;
+}
+
 .container {
   background-color: lightgray;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  width: 100%;
+  height: auto;
+  width: 100vw;
+}
+.content{
+  display: flex;
+  flex-direction: row;
 }
 .data {
   background-color: whitesmoke;
 }
 .header {
   background-color: aquamarine;
+}
+#location {
+  color: blue
 }

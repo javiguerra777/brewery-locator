@@ -1,17 +1,20 @@
 import './App.css';
-import Mainpage from './components/Mainpage';
+import Layout from './pages/Layout';
+import Main from './pages/Main';
+import Info from './pages/Info';
+import NotFound from './pages/NotFound';
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Maps from './components/Maps';
 
 function App() {
   return (
-    <>
-    <div className="App">
-      <Maps></Maps>
-      <Mainpage />
-    </div>
-    </>
+    <Routes>
+    <Route path='/' element={<Layout/>} >
+      <Route index element={<Main/>}/>
+      <Route path="brewery/:id" element={<Info />} />
+      <Route path="*" element={<NotFound />}/>
+    </Route>
+    </Routes>
   );
 }
 

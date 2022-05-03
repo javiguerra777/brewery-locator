@@ -2,7 +2,7 @@ import React from 'react';
 import { Map, Marker, Overlay } from 'pigeon-maps';
 import { maptiler } from 'pigeon-maps/providers';
 import RenderMarkers from './RenderMarkers';
-import beerImg from '../img/beer.png'
+import beerImg from '../img/beer.png';
 import styled from 'styled-components';
 
 const apiKey = process.env.REACT_APP_API_KEY;
@@ -25,11 +25,13 @@ const Maps = () => {
 
     //console.log(`${apiKey}`)
     return (
+     
         <ChangeMouse>
         <Map
             provider={maptilerProvider}
             dprs={[1, 2]}   //setstate dprs
-            height={500}    //setstate height
+            height={850}    //setstate height
+            width={500}
             defaultCenter={[50.879, 4.6997]} //setstate long, lat**
             //setstate zoom 
             defaultZoom={11}>
