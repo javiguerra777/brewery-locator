@@ -1,0 +1,8 @@
+#phone {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#phone:hover {
+  color: blue;
+}

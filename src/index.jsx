@@ -3,8 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 // import ErrorBoundary from './ErrorBoundary';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
-import Main from './pages/Main';
+
 
 const root = createRoot(document.getElementById('root'));
 root.render(

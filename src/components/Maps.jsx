@@ -64,6 +64,7 @@ const Maps = ( {data, lng, lat} ) => {
                 key={nanoid()}
                 dprs={[1,2]}
                 height={500}
+                width={800}
                 defaultCenter={[lat, lng]}
                 defaultZoom={11}>
                 {renderOverlays()}
@@ -75,6 +76,7 @@ const Maps = ( {data, lng, lat} ) => {
 
     //console.log(`${apiKey}`)
     return (
+     
         <ChangeMouse>
         {renderMap()}
         </ChangeMouse>
