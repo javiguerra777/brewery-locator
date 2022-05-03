@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { nanoid } from 'nanoid';
+import Maps from '../components/Maps'
 import './mainpage.css';
 
-const Mainpage = () => {
+const Main = () => {
   const [location, setLocation] = useState('Fresno, CA');
   const fixedLocation = location.split(',');
   const [newLocation, setNewLocation] = useState('');
@@ -29,6 +30,7 @@ const Mainpage = () => {
   }, [location]);
   return (
     <>
+    <Maps data={data}></Maps>
     <div className='container'>
       <div className='header'>
       <h1>Brewery Search For <strong>{location}</strong>:</h1>
@@ -62,4 +64,4 @@ const Mainpage = () => {
   );
 }
 
-export default Mainpage;
+export default Main;

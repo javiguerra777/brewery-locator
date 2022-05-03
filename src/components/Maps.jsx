@@ -1,9 +1,10 @@
 import React from 'react';
 import { Map, Marker, Overlay } from 'pigeon-maps';
 import { maptiler } from 'pigeon-maps/providers';
-import RenderMarkers from './RenderMarkers';
-import beerImg from '../img/beer.png'
+import RenderOverlays from './RenderOverlays';
+import beerImg from '../img/beer.png';
 import styled from 'styled-components';
+
 
 const apiKey = process.env.REACT_APP_API_KEY;
 // const apiKey = 'xjvsbhH2HT83hJjmdqQ2'
@@ -21,7 +22,7 @@ const ChangeMouse = styled.div`
 `
 
 //console.log(apiKey)
-const Maps = () => {
+const Maps = ( {data} ) => {
 
     //console.log(`${apiKey}`)
     return (
@@ -37,12 +38,13 @@ const Maps = () => {
             {/* i think we'll decide between overlay and markers */}
             {/* <Marker width={50} anchor={[50.879, 4.6997]} />
             <Marker width={50} anchor={[50, 4]} onClick={() => meow()}/> */}
-            <Overlay anchor={[50.879, 4.6997]} offset={[22, 60]}>
+            <RenderOverlays data={data}></RenderOverlays>
+            {/* <Overlay anchor={[50.879, 4.6997]} offset={[22, 60]}>
                 <img src={beerImg} width={50} height={50} onClick={() => meow()}  alt='' />
             </Overlay>
             <Overlay anchor={[50, 4]} offset={[22, 60]}>
                 <img src={beerImg} width={50} height={50} onClick={() => meow()}  alt='' />
-            </Overlay>
+            </Overlay> */}
         </Map>
         </ChangeMouse>
     )                                                                   
