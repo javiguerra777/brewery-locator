@@ -1,9 +1,9 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { nanoid } from 'nanoid';
-import Maps from '../components/Maps'
-import '../components/mainpage.css';
-
+import '../stylesheets/main.css';
+import Form from '../components/Form';
+import Breweries from '../components/Breweries';
+import Maps from '../components/Maps';
+import { getBreweries } from '../services/API';
 const Main = () => {
   const [location, setLocation] = useState('Fresno, CA');
   const fixedLocation = location.split(',');
@@ -11,23 +11,32 @@ const Main = () => {
   const [data, setData] = useState([]);
   const [lng, setLng] = useState(0);
   const [lat, setLat] = useState(0);
-  const breweryUrl = `https://api.openbrewerydb.org/breweries?by_city=${fixedLocation[0]}`;
   const handleLocationChange = (e) => {
     setNewLocation(e.target.value);
   }
   const submit = (e) => {
     e.preventDefault();
+    localStorage.setItem('location', JSON.stringify(newLocation));
     setLocation(newLocation);
     setNewLocation('');
   }
+  //grab data from API
   useEffect(() => {
-    axios.get(breweryUrl)
+    getBreweries(fixedLocation[0])
     .then((response)=>{
-       console.log(response.data)
-      setData(response.data)})
-    .catch((err)=> console.log(err));
-
-  }, [location]);
+      console.log(response.data)
+    setData(response.data);
+    setNewLocation('');
+    })
+  },[location])
+  
+  //grab data from localstorage
+  useEffect(()=> {
+    const retrieveLocation = JSON.parse(localStorage.getItem('location'));
+    if(retrieveLocation){
+      setLocation(retrieveLocation);
+    }
+  },[])
   //use effect for default center in map component
   useEffect(() => {
     if(data.length){
@@ -48,41 +57,23 @@ const Main = () => {
         }
       }
     }
-  }, [data, location])
+  }, [data, location]);
+
   return (
-    <>
-    {(data && lng && lat) && <Maps data={data} lng={lng} lat={lat}></Maps>}
-    <div className='container'>
-      <div className='header'>
-      <h1>Brewery Search For <strong>{location}</strong>:</h1>
-      <p>Search by city, state, or zip</p>
-        <form onSubmit={submit} >
-        <label>
-          <input
-          value={newLocation}
-          onChange={handleLocationChange}
-          />
-        </label>
-        <button type='submit'>Search</button>
-        </form>
-      </div>
-    <div className='data'>
-      {/*Shows data from brewery API */}
-      <code>
-        {data.map((brewery)=> {
-          return (
-          <div key={nanoid()} className="card">
-            <p>{brewery.name}</p>
-            <p>{brewery.street} {brewery.city}, {brewery.state}</p>
-            <p>{brewery.phone}</p>
-          </div>
-          )
-        })}
-      </code>
-    </div>
-    </div>
-    </>
+  <>
+  <div className='container'>
+  <header>
+  <Form location={location} newLocation={newLocation} submit={submit} handleLocationChange={handleLocationChange} />
+  </header>
+  <section className='content'>
+  {(data && lng && lat) && <Maps data={data} lng={lng} lat={lat}></Maps>}
+  <Breweries data={data} />
+  </section>
+  </div>
+  </> 
   );
 }
-
 export default Main;
+  
+  
+
