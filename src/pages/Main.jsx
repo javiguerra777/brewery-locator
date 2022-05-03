@@ -42,16 +42,18 @@ const Main = () => {
     if(data.length){
       //for (const {name, longitude, latitude} of data){
       let foundLng = '';
+      let foundLat = '';
       const allData = data.entries();
       //loop until find a longitude
-      while (foundLng === ''){
+      while (foundLng === '' && foundLat === ''){
         let nextData = allData.next().value;
         let tempLng = parseFloat(nextData[1].longitude);
         let tempLat = parseFloat(nextData[1].latitude);
-        if (!isNaN(tempLng)){
+        if (!isNaN(tempLng) && !isNaN(tempLat)){
           foundLng = tempLng;
-          setLng(tempLng);
-          setLat(tempLat);
+          foundLat = tempLat;
+          setLng(foundLng);
+          setLat(foundLat);
         }
       }
     }
