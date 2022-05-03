@@ -8,7 +8,8 @@ const Mainpage = () => {
   const [newLocation, setNewLocation] = useState('');
   const [data, setData] = useState([]);
   const breweryUrl = `https://api.openbrewerydb.org/breweries?by_city=${fixedLocation[0]}`;
-
+  //const [breweries, setBreweries] = useState(data.map((brewery)=> brewery.name));
+  //console.log('Here are the breweries', breweries)
   const handleLocationChange = (e) => {
     setNewLocation(e.target.value);
   }
@@ -44,7 +45,15 @@ const Mainpage = () => {
     <div className='data'>
       {/*Shows data from brewery API */}
       <code>
-        {data.map((brewery)=> brewery.name)}
+        {data.map((brewery)=> {
+          return (
+          <div className="card">
+            <p>{brewery.name}</p>
+            <p>{brewery.street} {brewery.city}, {brewery.state}</p>
+            <p>{brewery.phone}</p>
+          </div>
+          )
+        })}
       </code>
     </div>
     </div>
