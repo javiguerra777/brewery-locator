@@ -46,11 +46,14 @@ const Maps = ( {data, lng, lat} ) => {
         for (const {name, longitude, latitude} of data){
             const flat=parseFloat(latitude)
             const flng=parseFloat(longitude)
-            coordElmts.push(
-                <Overlay anchor={[flat, flng]} key={nanoid()}>
-                    <img src={beerImg} width={50} height={50} onClick={() => meow(name, longitude, latitude)} alt={name}/>
-                </Overlay>
-            )
+            //add overlay if long and lat have values
+            if(!isNaN(flat) && !isNaN(flng)){
+                coordElmts.push(
+                    <Overlay anchor={[flat, flng]} key={nanoid()}>
+                        <img src={beerImg} width={50} height={50} onClick={() => meow(name, longitude, latitude)} alt={name}/>
+                    </Overlay>
+                )
+            }
         }
         //console.log(coordElmts);
         return coordElmts;
