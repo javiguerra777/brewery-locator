@@ -1,0 +1,19 @@
+.card {
+  background-color: aliceblue;
+  border: 1px black solid;
+  border-radius: .5em;
+  width: 75%;
+}
+.container {
+  background-color: lightgray;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+.data {
+  background-color: whitesmoke;
+}
+.header {
+  background-color: aquamarine;
+}
