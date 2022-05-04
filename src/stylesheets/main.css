@@ -1,3 +1,8 @@
+.box {
+  height: 100%;
+  overflow-y: scroll;
+
+}
 .card {
   background-color: aliceblue;
   border: 1px black solid;
@@ -12,18 +17,31 @@
   background-color: lightgray;
   display: flex;
   flex-direction: column;
-  height: auto;
+  height: 100vh;
   width: 100%;
+}
+.container-header {
+  height: 25%;
 }
 .content{
   display: flex;
   flex-direction: row;
+  height: 75%;
 }
 .data {
   background-color: whitesmoke;
 }
 .header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.header-container {
   background-color: aquamarine;
+}
+#search {
+  display: flex;
+  flex-direction: column;
 }
 #location {
   color: blue

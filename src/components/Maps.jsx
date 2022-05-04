@@ -67,7 +67,7 @@ const Maps = ( {data, lng, lat} ) => {
                 key={nanoid()}
                 dprs={[1,2]}
                 height={500}
-                width={800}
+                width={500}
                 defaultCenter={[lat, lng]}
                 defaultZoom={11}>
                 {renderOverlays()}
