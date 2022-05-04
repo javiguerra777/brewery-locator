@@ -17,15 +17,15 @@ export const Form = ({location, submit, newLocation, handleLocationChange, newSe
             value={newLocation}
             onChange={e=> handleLocationChange(e.target.value)}
             />
-            {suggestions && suggestions.map((suggestion, i) => {
+            
+          <button type='submit' disabled={disabled}>Search</button>
+          </label>
+          {suggestions && suggestions.map((suggestion, i) => {
               return (
               <div className='suggestions' key={i} onClick={()=> suggestionHandler(`${suggestion.city}, ${suggestion.state}`)}>{suggestion.city}, {suggestion.state}</div>
               );
             })}
-          <button type='submit' disabled={disabled}>Search</button>
-
-          </label>
-          <label>
+          {/* <label>
             Enter State:
             <input
             type="text"
@@ -38,7 +38,7 @@ export const Form = ({location, submit, newLocation, handleLocationChange, newSe
             type="text"
             />
             <button>Search</button>
-          </label>
+          </label> */}
       </form>
       <form>
         <label htmlFor='search'>
