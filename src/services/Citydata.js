@@ -1,12 +1,11 @@
-export function Cities(){
-  return [
+export const Cities =[
     {"city": "New York", "state": "NY"},
     {"city": "Buffalo", "state": "NY"},
     {"city": "Los Angeles", "state": "CA"},
     {"city": "Stockton", "state": "CA"},
     {"city": "Turlock", "state": "CA"},
     {"city": "Oakland", "state": "CA"},
-    {"city": "New Jersey", "state": "NJ"},
+    {"city": "Trenton", "state": "NJ"},
     {"city": "Santa Clara", "state": "CA"},
     {"city": "San Francisco", "state": "CA"},
     {"city": "Las Vegas", "state": "NV"},
@@ -28,9 +27,4 @@ export function Cities(){
     {"city": "Fresno", "state": "CA"},
     {"city": "Hershey", "state": "PA"},
 
-  ]
-};
-
-export function renderCities(state, val) {
-  return state.city.toLowerCase().indexOf(val.toLowerCase()) !== -1;
-}
+];

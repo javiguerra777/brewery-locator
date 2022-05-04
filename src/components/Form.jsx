@@ -1,13 +1,10 @@
 import React from 'react';
-import { Cities, renderCities } from '../services/Citydata';
-import Autocomplete from 'react-autocomplete';
 
-export const Form = ({location, setLocation, submit, newLocation, handleLocationChange, newSearch, handleSearch, resetSearch}) => {
+export const Form = ({location, submit, newLocation, handleLocationChange, newSearch, handleSearch, resetSearch, suggestions, suggestionHandler}) => {
   let disabled = false;
-  console.log(newSearch)
   return (
     <div className='header-container'>
-      <h1>Brewery Search For <span id="location">{location}</span>:</h1>
+      <h1>Brewery Search For <span id="location">{location ? location : "Crazy Stewie's Favorites"}</span>:</h1>
         <p>Search by city, state, or zip</p>
    
     <div className='header'>
@@ -18,8 +15,13 @@ export const Form = ({location, setLocation, submit, newLocation, handleLocation
             <input
             type="text"
             value={newLocation}
-            onChange={handleLocationChange}
+            onChange={e=> handleLocationChange(e.target.value)}
             />
+            {suggestions && suggestions.map((suggestion, i) => {
+              return (
+              <div className='suggestions' key={i} onClick={()=> suggestionHandler(`${suggestion.city}, ${suggestion.state}`)}>{suggestion.city}, {suggestion.state}</div>
+              );
+            })}
           <button type='submit' disabled={disabled}>Search</button>
 
           </label>
