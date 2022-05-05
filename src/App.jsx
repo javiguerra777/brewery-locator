@@ -2,7 +2,7 @@ import Layout from './pages/Layout';
 import Main from './pages/Main';
 import Info from './pages/Info';
 import NotFound from './pages/NotFound';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {

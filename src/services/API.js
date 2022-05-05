@@ -1,28 +1,7 @@
 import axios from "axios";
 
 const baseUrl = `https://api.openbrewerydb.org/breweries`;
-const apiKeyYelp = process.env.REACT_APP_API_KEY_YELP;
-
-const config = {
-  headers:{
-    Authorization:
-      "Bearer {apiKeyYelp}",
-  },
-  params: {
-    terms: "restaurants",
-    location: "1234 street street",
-    radius: 1609,
-    sort_by: "relevance",
-    limit: 50,
-  },
-};
-
-export const getYelpData = () => {
-  return axios.get("https://api.yelp.com/v3/search", config)
-  .then((response) => {
-    console.log(response);
-  })
-}
+const serverUrl = `http://localhost:3001`;
 
 export const getBreweries = (city) => {
   return axios.get(`${baseUrl}?by_city=${city}`);
@@ -31,3 +10,7 @@ export const getBreweries = (city) => {
 export const getBrewery = (id) => {
   return axios.get(`${baseUrl}/${id}`)
 };
+
+export const serverData = () => {
+  return axios.get(serverUrl);
+}
