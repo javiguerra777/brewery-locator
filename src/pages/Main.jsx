@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState} from 'react';
-import { getBreweries } from '../services/API';
+import { getBreweries, getYelpData } from '../services/API';
 import Form from '../components/Form';
 import Breweries from '../components/Breweries';
 import Maps from '../components/Maps';
@@ -10,12 +10,6 @@ import { device } from '../utils/device';
 import { Cities } from '../services/Citydata';
 import { serverData } from '../services/API';
 
-const HeaderWrapper = styled.div`
-  background-color: #ffffff;
-  h1{
-    font-family: 'Oleo Script', cursive;
-  }
-`
 const MainWrapper = styled.main`
   width: 100vw;
   height: 100vh;
@@ -78,6 +72,8 @@ const Main = () => {
   const [lat, setLat] = useState(0);
   const [newSearch, setNewSearch] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+  const [yelpData, setYelpData] = useState([]);
+  
   //functions
   if(newLocation.toLowerCase().includes('lol') || newLocation.toLowerCase().includes('hershe')){
     disabled = true;
@@ -128,6 +124,16 @@ const Main = () => {
     setSuggestions([]);
   }
   
+  // //test yelp api
+  // useEffect(() => {
+  //   getYelpData()
+  //   .then((response) => {
+  //     setYelpData(response.data)
+  //   })
+  //   .catch((err) => console.log(err));
+  //   console.log(yelpData)
+  // }, [])
+
   //grab data from API
   useEffect(() => {
     getBreweries(fixedLocation[0])
@@ -174,9 +180,6 @@ const Main = () => {
 
   return (
   <>
-    <HeaderWrapper>
-      <h1>BrewMaps</h1>
-    </HeaderWrapper>
     <MainWrapper>
       <article className='wholeContent'>
       <Form location={location}  newLocation={newLocation} submit={submit} handleLocationChange={handleLocationChange}

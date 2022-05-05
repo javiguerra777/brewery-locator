@@ -12,7 +12,7 @@ const Information = styled.div`
   #phone:hover {
     color: blue;
   }
-  `
+`
 
 const Info = () => {
   const navigate = useNavigate();
@@ -25,7 +25,6 @@ const Info = () => {
     .catch((err)=> console.log(err));
   }, [getBrewery, id]);
   
-
   return (
     <Information >
       <button onClick={()=> navigate('/')}>Return to home</button>
