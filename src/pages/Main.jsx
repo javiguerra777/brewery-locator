@@ -9,12 +9,6 @@ import brew_bkgd from '../img/brew_bkgd.png';
 import { device } from '../utils/device';
 import { Cities } from '../services/Citydata';
 
-const HeaderWrapper = styled.div`
-  background-color: #ffffff;
-  h1{
-    font-family: 'Oleo Script', cursive;
-  }
-`
 const MainWrapper = styled.main`
   width: 100vw;
   height: 100vh;

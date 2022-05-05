@@ -8,9 +8,16 @@ const CardWrapper = styled.div`
   border: 1px black solid;
   border-radius: .5em;
   cursor: pointer;
+  background-color: #cd9f42;
+  .card{
+    &:hover{
+      p{
+        color: #ffe5cb;
+      }
+    }
+  }
   .brewType{
     text-transform: capitalize;
-    background-color: purple;
   }
 `
 

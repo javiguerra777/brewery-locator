@@ -1,10 +1,12 @@
 import axios from "axios";
+
 const baseUrl = `https://api.openbrewerydb.org/breweries`;
+const apiKeyYelp = process.env.REACT_APP_API_KEY_YELP;
 
 const config = {
   headers:{
     Authorization:
-      "Bearer {REACT_APP_API_KEY_YELP}",
+      "Bearer {apiKeyYelp}",
   },
   params: {
     terms: "restaurants",

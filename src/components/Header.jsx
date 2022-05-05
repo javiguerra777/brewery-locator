@@ -4,13 +4,42 @@ import styled from 'styled-components';
 
 const HeaderWrapper = styled.header`
     display: flex;
-    h1:hover{
-        color: #000000;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #cd9f42;
+    padding: 1rem 1.5rem;
+    & > a{
+        text-decoration: none;
+    }
+    h1{
+        font-family: 'Oleo Script', cursive;
+        &:hover{
+            color: #ffe5cb;
+        }
     }
 `
 
 const NavWrapper = styled.nav`
     display: flex;
+    ul{
+        display: flex;
+        list-style-type: none;
+    }
+    li{
+        padding-lefrt: 1.5rem;
+        &: first-child{
+            padding-left: 0;
+        }
+    }
+    a{
+        text-decoration: none;
+        &:hover{
+            color: #ffe5cb;
+        }
+        &.active{
+            color: #94e6ed;
+        }
+    }
 `
 
 const Header = () => {
