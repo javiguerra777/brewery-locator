@@ -8,6 +8,9 @@ const CardWrapper = styled.div`
   border: 1px black solid;
   border-radius: .5em;
   cursor: pointer;
+  .card:hover {
+    background-color: purple;
+  }
 `
 
 const Brewery = ({brewery: {id, name, street, city, state, phone, brewery_type}}) => {
