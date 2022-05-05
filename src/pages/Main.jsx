@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import brew_bkgd from '../img/brew_bkgd.png';
 import { device } from '../utils/device';
 import { Cities } from '../services/Citydata';
+import { serverData } from '../services/API';
 
 const HeaderWrapper = styled.div`
   background-color: #ffffff;
@@ -136,6 +137,11 @@ const Main = () => {
     })
     .catch((err)=> console.log(err));
   },[location])
+  //grabbing data from the Yelp API
+  useEffect(()=> {
+    serverData()
+    .then(response => console.log(response))
+  }, []);
   
   //grab data from localstorage
   useEffect(()=> {
