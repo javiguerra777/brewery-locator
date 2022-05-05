@@ -4,6 +4,16 @@ import { getBrewery } from '../services/API';
 import { phoneStyle } from '../services/Functions';
 import styled from 'styled-components';
 
+const Information = styled.div`
+  background-color: black;
+  #phone {
+    text-decoration: underline;
+  }
+  #phone:hover {
+    color: blue;
+  }
+`
+
 const Info = () => {
   const navigate = useNavigate();
   const [brewery, setBrewery] = useState([]);
@@ -15,16 +25,6 @@ const Info = () => {
     .catch((err)=> console.log(err));
   }, [getBrewery, id]);
   
-  const Information = styled.div`
-  background-color: black;
-  #phone {
-    text-decoration: underline;
-  }
-  #phone:hover {
-    color: blue;
-  }
-  `
-
   return (
     <Information >
       <button onClick={()=> navigate('/')}>Return to home</button>
