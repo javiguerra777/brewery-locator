@@ -4,30 +4,76 @@ import Form from '../components/Form';
 import Breweries from '../components/Breweries';
 import Maps from '../components/Maps';
 import { getBreweries } from '../services/API';
+import { Cities } from '../services/Citydata';
+
 const Main = () => {
-  const [location, setLocation] = useState('Fresno, CA');
+  let disabled = false;
+  const [location, setLocation] = useState(JSON.parse(localStorage.getItem('location')) ||'Fresno, CA');
   const fixedLocation = location.split(',');
   const [newLocation, setNewLocation] = useState('');
   const [data, setData] = useState([]);
   const [lng, setLng] = useState(0);
   const [lat, setLat] = useState(0);
-  const handleLocationChange = (e) => {
-    setNewLocation(e.target.value);
+  const [newSearch, setNewSearch] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  //functions
+  if(newLocation.toLowerCase() === 'lol' || newLocation.toLowerCase() === 'hershe' || newLocation.toLowerCase() === 'hershey'){
+    disabled = true;
   }
+  const handleLocationChange = (text) => {
+    let matches = [];
+    if(text.length > 0){
+     matches = Cities.filter(city => {
+       const regex = new RegExp(`${text}`, "gi");
+       return city.city.match(regex);
+     })
+    }
+    setSuggestions(matches);
+    setNewLocation(text);
+  };
+
   const submit = (e) => {
     e.preventDefault();
     localStorage.setItem('location', JSON.stringify(newLocation));
     setLocation(newLocation);
     setNewLocation('');
+    setSuggestions([]);
+  };
+
+  const handleSearch = (e) => {
+    setNewSearch(e.target.value);
+  };
+
+  const search = (apiData) => {
+    if (newSearch === ''){
+      return apiData;
+    }else {
+      return apiData.filter((value)=> {
+        if(value.name?.toLowerCase().includes(newSearch.toLowerCase()) || value.brewery_type?.toLowerCase().includes(newSearch.toLowerCase()) ||
+        value.state?.toLowerCase().includes(newSearch.toLowerCase())){
+          return value; 
+        }
+      })
+    }
+  };
+  const resetSearch = (e)=> {
+    e.preventDefault();
+    setNewSearch('');
+  };
+
+  const suggestionHandler = (text)=> {
+  setNewLocation(text);
+    setSuggestions([]);
   }
+  
   //grab data from API
   useEffect(() => {
     getBreweries(fixedLocation[0])
     .then((response)=>{
-      console.log(response.data)
     setData(response.data);
     setNewLocation('');
     })
+    .catch((err)=> console.log(err));
   },[location])
   
   //grab data from localstorage
@@ -62,13 +108,17 @@ const Main = () => {
   return (
   <>
   <div className='container'>
-  <header>
-  <Form location={location} newLocation={newLocation} submit={submit} handleLocationChange={handleLocationChange} />
-  </header>
-  <section className='content'>
-  {(data && lng && lat) && <Maps data={data} lng={lng} lat={lat}></Maps>}
-  <Breweries data={data} />
-  </section>
+    <header className='container-header'>
+    <Form location={location}  newLocation={newLocation} submit={submit} handleLocationChange={handleLocationChange}
+    newSearch={newSearch} handleSearch={handleSearch} resetSearch={resetSearch}
+    suggestions={suggestions} suggestionHandler={suggestionHandler} disabled = {disabled}/>
+    </header>
+    <div className='content'>
+    {(data && lng && lat) && <Maps data={data} lng={lng} lat={lat}></Maps>}
+      <div className='box'>
+      <Breweries data={search(data)}/>
+      </div>
+    </div>
   </div>
   </> 
   );
