@@ -20,7 +20,7 @@ const MapContainer = styled.div`
     @media ${device.tablet}{
         width: 77vw;
         height: 100vh;
-      }
+    }
 `
 
 const Maps = ( {data, lng, lat} ) => {
@@ -53,7 +53,6 @@ const Maps = ( {data, lng, lat} ) => {
                     </Overlay>
                 )
             }
-            
         }
         return coordElmts;
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState} from 'react';
-import { getBreweries } from '../services/API';
+import { getBreweries, getYelpData } from '../services/API';
 import Form from '../components/Form';
 import Breweries from '../components/Breweries';
 import Maps from '../components/Maps';
@@ -77,6 +77,8 @@ const Main = () => {
   const [lat, setLat] = useState(0);
   const [newSearch, setNewSearch] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+  const [yelpData, setYelpData] = useState([]);
+  
   //functions
   if(newLocation.toLowerCase() === 'lol' || newLocation.toLowerCase() === 'hershe' || newLocation.toLowerCase() === 'hershey'){
     disabled = true;
@@ -127,6 +129,16 @@ const Main = () => {
     setSuggestions([]);
   }
   
+  // //test yelp api
+  // useEffect(() => {
+  //   getYelpData()
+  //   .then((response) => {
+  //     setYelpData(response.data)
+  //   })
+  //   .catch((err) => console.log(err));
+  //   console.log(yelpData)
+  // }, [])
+
   //grab data from API
   useEffect(() => {
     getBreweries(fixedLocation[0])
@@ -168,9 +180,6 @@ const Main = () => {
 
   return (
   <>
-    <HeaderWrapper>
-      <h1>BrewMaps</h1>
-    </HeaderWrapper>
     <MainWrapper>
       <article className='wholeContent'>
       <Form location={location}  newLocation={newLocation} submit={submit} handleLocationChange={handleLocationChange}

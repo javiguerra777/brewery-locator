@@ -6,6 +6,13 @@ const FormWrapper = styled.section`
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
+  input{
+    color: #000000;
+    background-color: #ffffff;
+  }
+  button{
+    min-width: 100px;
+  }
 `
 
 export const Form = ({location, submit, newLocation, handleLocationChange, newSearch, handleSearch, resetSearch, suggestions, suggestionHandler, disabled}) => {

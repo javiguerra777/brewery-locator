@@ -8,6 +8,9 @@ const CardWrapper = styled.div`
   border: 1px black solid;
   border-radius: .5em;
   cursor: pointer;
+  .brewType{
+    text-transform: capitalize;
+  }
 `
 
 const Brewery = ({brewery: {id, name, street, city, state, phone, brewery_type}}) => {
@@ -18,7 +21,7 @@ const Brewery = ({brewery: {id, name, street, city, state, phone, brewery_type}}
         <p>{name}</p>
         <p>{street} {city}, {state}</p>
         <p>{phoneStyle(phone)}</p>
-        <p>{brewery_type}</p>
+        <p className='brewType'>{brewery_type}</p>
       </div>
     </CardWrapper>
   );
