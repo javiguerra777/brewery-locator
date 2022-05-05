@@ -19,7 +19,7 @@ const MapContainer = styled.div`
 
     @media ${device.tablet}{
         width: 77vw;
-        height: 70vh;
+        height: 100vh;
       }
 `
 

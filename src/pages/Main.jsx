@@ -36,13 +36,21 @@ const MainWrapper = styled.main`
   }
   .contentSection{
     margin: 20px auto;
+    height: 80vh;
     width: 95vw;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     position: relative;
     .dataContainer{
-      overflow:hidden;
+      overflow-y:scroll;
+    }
+    .dataContainer::-webkit-scrollbar{
+      display: none;
+    }
+    .dataContainer{
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
   }
 

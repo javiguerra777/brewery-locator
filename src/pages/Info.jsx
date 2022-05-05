@@ -14,6 +14,7 @@ const Info = () => {
     .then(({data:brewery}) => setBrewery(brewery))
     .catch((err)=> console.log(err));
   }, [getBrewery, id]);
+  
   return (
     <div>
       <button onClick={()=> navigate('/')}>Return to home</button>
