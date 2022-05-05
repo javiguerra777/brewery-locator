@@ -5,7 +5,9 @@ import Breweries from '../components/Breweries';
 import Maps from '../components/Maps';
 import { getBreweries } from '../services/API';
 import { Cities } from '../services/Citydata';
+
 const Main = () => {
+  let disabled = false;
   const [location, setLocation] = useState(JSON.parse(localStorage.getItem('location')) ||'Fresno, CA');
   const fixedLocation = location.split(',');
   const [newLocation, setNewLocation] = useState('');
@@ -15,6 +17,9 @@ const Main = () => {
   const [newSearch, setNewSearch] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   //functions
+  if(newLocation.toLowerCase() === 'lol' || newLocation.toLowerCase() === 'hershe' || newLocation.toLowerCase() === 'hershey'){
+    disabled = true;
+  }
   const handleLocationChange = (text) => {
     let matches = [];
     if(text.length > 0){
@@ -44,8 +49,8 @@ const Main = () => {
       return apiData;
     }else {
       return apiData.filter((value)=> {
-        if(value.name?.toLowerCase().includes(newSearch) || value.name?.includes(newSearch) || value.brewery_type?.toLowerCase().includes(newSearch) || value.brewery_type?.includes(newSearch) ||
-        value.state?.toLowerCase().includes(newSearch) || value.state?.includes(newSearch)){
+        if(value.name?.toLowerCase().includes(newSearch.toLowerCase()) || value.brewery_type?.toLowerCase().includes(newSearch.toLowerCase()) ||
+        value.state?.toLowerCase().includes(newSearch.toLowerCase())){
           return value; 
         }
       })
@@ -60,6 +65,7 @@ const Main = () => {
   setNewLocation(text);
     setSuggestions([]);
   }
+  
   //grab data from API
   useEffect(() => {
     getBreweries(fixedLocation[0])
@@ -67,6 +73,7 @@ const Main = () => {
     setData(response.data);
     setNewLocation('');
     })
+    .catch((err)=> console.log(err));
   },[location])
   
   //grab data from localstorage
@@ -102,7 +109,7 @@ const Main = () => {
     <header className='container-header'>
     <Form location={location}  newLocation={newLocation} submit={submit} handleLocationChange={handleLocationChange}
     newSearch={newSearch} handleSearch={handleSearch} resetSearch={resetSearch}
-    suggestions={suggestions} suggestionHandler={suggestionHandler} />
+    suggestions={suggestions} suggestionHandler={suggestionHandler} disabled = {disabled}/>
     </header>
     <div className='content'>
     {(data && lng && lat) && <Maps data={data} lng={lng} lat={lat}></Maps>}

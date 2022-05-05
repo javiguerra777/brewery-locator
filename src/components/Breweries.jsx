@@ -1,7 +1,7 @@
 import React from 'react';
 import Brewery from './Brewery';
 
-const Breweries = ({data, search}) => {
+const Breweries = ({data}) => {
   return (
     <div className='data'>
         {/*Shows data from brewery API */}
