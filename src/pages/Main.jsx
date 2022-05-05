@@ -1,10 +1,71 @@
-import { useEffect, useState } from 'react';
-import '../stylesheets/main.css';
+import React from 'react';
+import { useEffect, useState} from 'react';
+import { getBreweries } from '../services/API';
 import Form from '../components/Form';
 import Breweries from '../components/Breweries';
 import Maps from '../components/Maps';
-import { getBreweries } from '../services/API';
+import styled from 'styled-components';
+import brew_bkgd from '../img/brew_bkgd.png';
+import { device } from '../utils/device';
 import { Cities } from '../services/Citydata';
+
+const HeaderWrapper = styled.div`
+  background-color: #ffffff;
+  h1{
+    font-family: 'Oleo Script', cursive;
+  }
+`
+const MainWrapper = styled.main`
+  width: 100vw;
+  height: 100vh;
+  background-image: url(${brew_bkgd});
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+  .wholeContent{
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow-y: scroll;
+  }
+  .wholeContent::-webkit-scrollbar{
+    display: none;
+  }
+  .wholeContent{
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .contentSection{
+    margin: 20px auto;
+    height: 80vh;
+    width: 95vw;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    .dataContainer{
+      overflow-y:scroll;
+    }
+    .dataContainer::-webkit-scrollbar{
+      display: none;
+    }
+    .dataContainer{
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  }
+
+  @media ${device.tablet}{
+    .contentSection{
+      width: 90vw;
+      flex-direction: row;
+    }
+
+    .dataContainer{
+      width: 23vw;
+    }
+  }
+`
 
 const Main = () => {
   let disabled = false;
@@ -88,16 +149,18 @@ const Main = () => {
     if(data.length){
       //for (const {name, longitude, latitude} of data){
       let foundLng = '';
+      let foundLat = '';
       const allData = data.entries();
       //loop until find a longitude
-      while (foundLng === ''){
+      while (foundLng === '' && foundLat === ''){
         let nextData = allData.next().value;
         let tempLng = parseFloat(nextData[1].longitude);
         let tempLat = parseFloat(nextData[1].latitude);
-        if (!isNaN(tempLng && !isNaN(tempLat))){
+        if (!isNaN(tempLng) && !isNaN(tempLat)){
           foundLng = tempLng;
-          setLng(tempLng);
-          setLat(tempLat);
+          foundLat = tempLat;
+          setLng(foundLng);
+          setLat(foundLat);
         }
       }
     }
@@ -105,23 +168,25 @@ const Main = () => {
 
   return (
   <>
-  <div className='container'>
-    <header className='container-header'>
-    <Form location={location}  newLocation={newLocation} submit={submit} handleLocationChange={handleLocationChange}
-    newSearch={newSearch} handleSearch={handleSearch} resetSearch={resetSearch}
-    suggestions={suggestions} suggestionHandler={suggestionHandler} disabled = {disabled}/>
-    </header>
-    <div className='content'>
-    {(data && lng && lat) && <Maps data={data} lng={lng} lat={lat}></Maps>}
-      <div className='box'>
-      <Breweries data={search(data)}/>
-      </div>
-    </div>
-  </div>
+    <HeaderWrapper>
+      <h1>BrewMaps</h1>
+    </HeaderWrapper>
+    <MainWrapper>
+      <article className='wholeContent'>
+      <Form location={location}  newLocation={newLocation} submit={submit} handleLocationChange={handleLocationChange}
+        newSearch={newSearch} handleSearch={handleSearch} resetSearch={resetSearch}
+        suggestions={suggestions} suggestionHandler={suggestionHandler} disabled = {disabled}/>
+        <section className='contentSection'>
+          <div className='mapContainer'>
+            {(data && lng && lat) && <Maps data={data} lng={lng} lat={lat}></Maps>}
+          </div>
+          <div className='dataContainer'>
+            <Breweries data={search(data)}/>
+          </div>
+        </section>
+      </article>
+    </MainWrapper>
   </> 
   );
 }
 export default Main;
-  
-  
-

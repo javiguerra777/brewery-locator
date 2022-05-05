@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useParams , useNavigate} from 'react-router-dom';
 import { getBrewery } from '../services/API';
 import { phoneStyle } from '../services/Functions';
-import '../stylesheets/info.css'
+import styled from 'styled-components';
+
 const Info = () => {
   const navigate = useNavigate();
   const [brewery, setBrewery] = useState([]);
@@ -13,21 +14,22 @@ const Info = () => {
     .then(({data:brewery}) => setBrewery(brewery))
     .catch((err)=> console.log(err));
   }, [getBrewery, id]);
+  
   return (
     <div className='information'>
       <button onClick={()=> navigate('/')}>Return to home</button>
-     <h1>Brewery Info:</h1>
-     <p>
-      Name: {name}
-     <br/>
-     Address: {street} {city}, {state}
-     <br/>
-     Phone: {phone ? <span id="phone">{phoneStyle(phone)}</span> : 'N/A'}
-      <br/>
-      Website: {website_url ? <a href={website_url} target="_blank">{website_url}</a> : 'N/A'}
-      <br/>
-      Type of Brewery: {brewery_type}
-     </p>
+      <h1>Brewery Info:</h1>
+      <p>
+        Name: {name}
+        <br/>
+        Address: {street} {city}, {state}
+        <br/>
+        Phone: {phone ? <span id="phone">{phoneStyle(phone)}</span> : 'N/A'}
+        <br/>
+        Website: {website_url ? <a href={website_url} target="_blank" rel="noreferrer">{website_url}</a> : 'N/A'}
+        <br/>
+        Type of Brewery: {brewery_type}
+      </p>
     </div>
   );
 };
