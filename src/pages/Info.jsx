@@ -15,8 +15,18 @@ const Info = () => {
     .catch((err)=> console.log(err));
   }, [getBrewery, id]);
   
+  const Information = styled.div`
+  background-color: black;
+  #phone {
+    text-decoration: underline;
+  }
+  #phone:hover {
+    color: blue;
+  }
+  `
+
   return (
-    <div className='information'>
+    <Information >
       <button onClick={()=> navigate('/')}>Return to home</button>
       <h1>Brewery Info:</h1>
       <p>
@@ -30,7 +40,7 @@ const Info = () => {
         <br/>
         Type of Brewery: {brewery_type}
       </p>
-    </div>
+    </Information>
   );
 };
 
