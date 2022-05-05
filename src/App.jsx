@@ -1,4 +1,3 @@
-import './App.css';
 import Layout from './pages/Layout';
 import Main from './pages/Main';
 import Info from './pages/Info';

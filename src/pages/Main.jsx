@@ -80,7 +80,7 @@ const Main = () => {
   const [yelpData, setYelpData] = useState([]);
   
   //functions
-  if(newLocation.toLowerCase() === 'lol' || newLocation.toLowerCase() === 'hershe' || newLocation.toLowerCase() === 'hershey'){
+  if(newLocation.toLowerCase().includes('lol') || newLocation.toLowerCase().includes('hershe')){
     disabled = true;
   }
   const handleLocationChange = (text) => {
