@@ -25,6 +25,5 @@ export const Cities =[
     {"city": "Kansas City", "state": "MO"},
     {"city": "Austin", "state": "TX"},
     {"city": "Fresno", "state": "CA"},
-    {"city": "Hershey", "state": "PA"},
-
+    {"city": "Pittsburgh", "state": "PA"},
 ];
