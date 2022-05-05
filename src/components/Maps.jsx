@@ -53,6 +53,7 @@ const Maps = ( {data, lng, lat} ) => {
                     </Overlay>
                 )
             }
+            
         }
         return coordElmts;
     }

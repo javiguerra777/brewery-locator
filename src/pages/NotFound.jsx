@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import bkgd_img from '../img/four_oh_four_bkgd.png'
+import { useNavigate } from 'react-router-dom';
 
 const FourOhFour = styled.div`
   width: 100vw;
@@ -18,9 +19,11 @@ const FourOhFour = styled.div`
 `
 
 const NotFound = () => {
+  const navigate = useNavigate();
   return (
     <FourOhFour>
       <h2>404: Page Not Found!</h2>
+      <button onClick={()=> navigate('/')}>Go to Home</button>
     </FourOhFour>
   );
 };

@@ -16,7 +16,7 @@ const Info = () => {
   }, [getBrewery, id]);
   
   return (
-    <div>
+    <div className='information'>
       <button onClick={()=> navigate('/')}>Return to home</button>
       <h1>Brewery Info:</h1>
       <p>
