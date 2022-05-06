@@ -27,7 +27,6 @@ const Info = () => {
   
   return (
     <Information >
-      <button onClick={()=> navigate('/')}>Return to home</button>
       <h1>Brewery Info:</h1>
       <p>
         Name: {name}

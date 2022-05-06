@@ -15,17 +15,23 @@ const MapContainer = styled.div`
     height: 60vh;
     img{
         cursor: pointer;
+        opacity: 0.7;
+        &:hover{
+            opacity: 1;
+        }
     }
 
     @media ${device.tablet}{
         width: 77vw;
         height: 100vh;
     }
+
+    
 `
 
-const Maps = ( {data, lng, lat} ) => {
-  const [switchPages, setSwitchPages] = useState(false);
-  const navigate = useNavigate();
+const Maps = ( {data, lng, lat, selectBrewery} ) => {
+    const [switchPages, setSwitchPages] = useState(false);
+    const navigate = useNavigate();
     const [curLng, setCurLng] = useState(0);
     const [curLat, setCurLat] = useState(0);
     const [curZoom, setCurZoom] = useState(0);
@@ -56,7 +62,7 @@ const Maps = ( {data, lng, lat} ) => {
             if(!isNaN(flat) && !isNaN(flng)){
                 coordElmts.push(
                     <Overlay anchor={[flat, flng]} key={nanoid()}>
-                        <img src={beerImg} width={50} height={50} onClick={() => brewClick(name, longitude, latitude, id)} alt={name}/>
+                        <img src={beerImg} width={50} height={50} onMouseEnter={() => selectBrewery(id)} onMouseLeave={() => selectBrewery({})} onClick={() => brewClick(name, longitude, latitude, id)} alt={name}/>
                     </Overlay>
                 )
             }

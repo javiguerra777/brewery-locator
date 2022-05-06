@@ -34,7 +34,7 @@ app.get('/', async (req, res)=> {
   })
   
   res.send(data);
-  ;
+
   }catch(err){
     console.log(err.response);
   }
