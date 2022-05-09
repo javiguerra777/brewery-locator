@@ -4,7 +4,7 @@ import { Map, Overlay } from 'pigeon-maps';
 import { maptiler } from 'pigeon-maps/providers';
 import styled from 'styled-components';
 import beerImg from '../img/beer.png';
-import {nanoid} from 'nanoid';
+import { nanoid } from 'nanoid';
 import { device } from '../utils/device';
 import { useNavigate } from 'react-router-dom';
 
@@ -43,7 +43,7 @@ const Maps = ( {data, lng, lat, selectBrewery} ) => {
     }, [lat, lng])
 
     const brewClick = (bname, blng, blat, id) => {
-      setSwitchPages(true);
+        setSwitchPages(true);
         setCurZoom(14);
         setCurLng(parseFloat(blng));
         setCurLat(parseFloat(blat));
@@ -79,7 +79,6 @@ const Maps = ( {data, lng, lat, selectBrewery} ) => {
                 center={[curLat, curLng]}
                 defaultZoom={curZoom}>
                 {renderOverlays()}
-                {/* second overlay */}
             </Map>
         );
         return mapElmt;
@@ -92,4 +91,4 @@ const Maps = ( {data, lng, lat, selectBrewery} ) => {
     )                                                                   
 }                                                                           
 
-export default Maps;
+export default React.memo(Maps);
