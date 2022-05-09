@@ -68,12 +68,11 @@ const Main = () => {
   const fixedLocation = location.split(',');
   const [newLocation, setNewLocation] = useState('');
   const [data, setData] = useState([]);
+  const [selected, setSelected] = useState({});
   const [lng, setLng] = useState(0);
   const [lat, setLat] = useState(0);
   const [newSearch, setNewSearch] = useState('');
   const [suggestions, setSuggestions] = useState([]);
-  const [yelpData, setYelpData] = useState([]);
-  
   //functions
   if(newLocation.toLowerCase().includes('lol') || newLocation.toLowerCase().includes('hershe')){
     disabled = true;
@@ -123,16 +122,13 @@ const Main = () => {
   setNewLocation(text);
     setSuggestions([]);
   }
-  
-  // //test yelp api
-  // useEffect(() => {
-  //   getYelpData()
-  //   .then((response) => {
-  //     setYelpData(response.data)
-  //   })
-  //   .catch((err) => console.log(err));
-  //   console.log(yelpData)
-  // }, [])
+
+  const selectBrewery = (id) => {
+    // setSelected(id);
+    const match = data.find(brew => brew.id === id);
+    setSelected(match); 
+    console.log(match);
+  }
 
   //grab data from API
   useEffect(() => {
@@ -187,10 +183,10 @@ const Main = () => {
         suggestions={suggestions} suggestionHandler={suggestionHandler} disabled = {disabled}/>
         <section className='contentSection'>
           <div className='mapContainer'>
-            {(data && lng && lat) && <Maps data={data} lng={lng} lat={lat}></Maps>}
+            {(data && lng && lat) && <Maps data={search(data)} lng={lng} lat={lat} selectBrewery={selectBrewery}></Maps>}
           </div>
           <div className='dataContainer'>
-            <Breweries data={search(data)}/>
+            <Breweries data={search(data)} selected={selected}/>
           </div>
         </section>
       </article>
