@@ -15,7 +15,7 @@ const Layout = () => {
       <Header />
       <Outlet />
     </>
-  );
+  )
 };
 
 export default Layout;

@@ -25,7 +25,7 @@ const NotFound = () => {
       <h2>404: Page Not Found!</h2>
       <button onClick={()=> navigate('/')}>Go to Home</button>
     </FourOhFour>
-  );
+  )
 };
 
 export default NotFound;

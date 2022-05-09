@@ -32,7 +32,7 @@ const Brewery = ({brewery: {id, name, street, city, state, phone, brewery_type}}
         <p className='brewType'>{brewery_type}</p>
       </div>
     </CardWrapper>
-  );
+  )
 };
 
 export default Brewery;

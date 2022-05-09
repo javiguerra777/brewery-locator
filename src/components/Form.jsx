@@ -53,7 +53,7 @@ export const Form = ({location, submit, newLocation, handleLocationChange, newSe
           {suggestions && suggestions.map((suggestion, i) => {
           return (
             <div className='suggestions' key={i} onClick={()=> suggestionHandler(`${suggestion.city}, ${suggestion.state}`)}>{suggestion.city}, {suggestion.state}</div>
-            );
+            )
           })}
             {/* <label>
               Enter State:
@@ -85,7 +85,7 @@ export const Form = ({location, submit, newLocation, handleLocationChange, newSe
         </form>
       </div>
     </FormWrapper>
-  );
+  )
 };
 
 export default Form;

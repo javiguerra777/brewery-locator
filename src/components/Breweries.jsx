@@ -7,9 +7,9 @@ const Breweries = ({data}) => {
       {/*Shows data from brewery API */}
       {data.map((brewery)=> {
         return (<Brewery key ={brewery.id} brewery={brewery}/>)
-      })};
+      })}
     </div>
-  );
+  )
 };
 
 export default Breweries;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState} from 'react';
-import { getBreweries, getYelpData } from '../services/API';
+import { getBreweries, serverData} from '../services/API';
 import Form from '../components/Form';
 import Breweries from '../components/Breweries';
 import Maps from '../components/Maps';
@@ -8,7 +8,6 @@ import styled from 'styled-components';
 import brew_bkgd from '../img/brew_bkgd.png';
 import { device } from '../utils/device';
 import { Cities } from '../services/Citydata';
-import { serverData } from '../services/API';
 
 const MainWrapper = styled.main`
   width: 100vw;
@@ -123,16 +122,6 @@ const Main = () => {
   setNewLocation(text);
     setSuggestions([]);
   }
-  
-  // //test yelp api
-  // useEffect(() => {
-  //   getYelpData()
-  //   .then((response) => {
-  //     setYelpData(response.data)
-  //   })
-  //   .catch((err) => console.log(err));
-  //   console.log(yelpData)
-  // }, [])
 
   //grab data from API
   useEffect(() => {
@@ -144,10 +133,13 @@ const Main = () => {
     .catch((err)=> console.log(err));
   },[location])
   //grabbing data from the Yelp API
-  useEffect(()=> {
-    serverData()
-    .then(response => console.log(response))
-  }, []);
+  // useEffect(()=> {
+  //   serverData()
+  //   .then(response => {
+  //     console.log(response)
+  //     setYelpData(response)
+  //   })
+  // }, []);
   
   //grab data from localstorage
   useEffect(()=> {

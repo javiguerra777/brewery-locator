@@ -24,7 +24,7 @@ const Info = () => {
     .then(({data:brewery}) => setBrewery(brewery))
     .catch((err)=> console.log(err));
   }, [getBrewery, id]);
-  
+  console.log(brewery)
   return (
     <Information >
       <button onClick={()=> navigate('/')}>Return to home</button>
@@ -41,7 +41,7 @@ const Info = () => {
         Type of Brewery: {brewery_type}
       </p>
     </Information>
-  );
+  )
 };
 
 export default Info;
