@@ -12,3 +12,11 @@ if (match) {
 }
 return null;
 }
+
+export function onlyLetters(str) {
+  return /^[a-zA-Z\s]+$/.test(str);
+}
+
+export function error(err){
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+}
