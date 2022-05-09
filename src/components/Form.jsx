@@ -6,12 +6,29 @@ const FormWrapper = styled.section`
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
+  gap: 5px;
+  h2, span{
+    font-family: 'Oleo Script', cursive;
+    font-size: 1.8rem;
+  }
+  form{
+    margin-top: 5px;
+  }
+  #location{
+    text-transform: capitalize;
+  }
   input{
     color: #000000;
     background-color: #ffffff;
   }
   input::placeholder {
-    color: white;
+    color: #000000;
+  }
+  .searchInput{
+    min-width: 222px;
+  }
+  .filterInput{
+    min-width: 200px;
   }
   button {
     min-width: 100px;
@@ -20,7 +37,7 @@ const FormWrapper = styled.section`
     margin-left: 10px;
   }
   button:hover {
-    background-color: red;
+    background-color: #85cdd2;
   }
   .suggestions{
     cursor: pointer;
@@ -35,14 +52,15 @@ export const Form = ({location, submit, newLocation, handleLocationChange, newSe
   return (
     <FormWrapper>
       <div className='header-container'>
-        <h1>Brewery Search For <span id="location">{location ? location : "Crazy Stewie's Favorites"}</span>:</h1>
-          <p>Search by city, state, or zip</p>
+        <h2>Brewery Search For <span id="location">{location ? location : "Crazy Stewie's Favorites"}</span></h2>
+          {/* <p>Search by city, state, or zip</p> */}
       </div>
       <div className='formSection'>
-        <form id ="search" onSubmit={submit} >
+        <form id ='search' onSubmit={submit} >
           <label>
             Enter City:
             <input
+            className='searchInput'
             type="text"
             value={newLocation}
             placeholder="Fresno, CA"
@@ -72,8 +90,9 @@ export const Form = ({location, submit, newLocation, handleLocationChange, newSe
         </form>
         <form>
           <label htmlFor='search'>
-            Search through results:
-            <input 
+            Filter Results:
+            <input
+            className='filterInput' 
             type="text"
             id='search'
             placeholder='Tactical OPS Brewing Inc.'

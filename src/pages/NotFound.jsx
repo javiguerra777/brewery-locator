@@ -19,11 +19,9 @@ const FourOhFour = styled.div`
 `
 
 const NotFound = () => {
-  const navigate = useNavigate();
   return (
     <FourOhFour>
       <h2>404: Page Not Found!</h2>
-      <button onClick={()=> navigate('/')}>Go to Home</button>
     </FourOhFour>
   )
 };

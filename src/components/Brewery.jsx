@@ -2,7 +2,7 @@ import React from 'react';
 import { nanoid } from 'nanoid';
 import { useNavigate } from 'react-router-dom';
 import { phoneStyle } from '../services/Functions';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
 const CardWrapper = styled.div`
   border: 1px black solid;
@@ -12,19 +12,24 @@ const CardWrapper = styled.div`
   .card{
     &:hover{
       p{
-        color: #ffe5cb;
+        background-color: #85cdd2;
       }
     }
   }
   .brewType{
     text-transform: capitalize;
   }
+  ${props => props.isSelected && css`
+  background-color: #85cdd2`}
 `
+//background-color: ${props => props.isSelected?'purple':'#cd9f42'};
+// ${props => props.isSelected && css`
+// color: #85cdd2`}
 
-const Brewery = ({brewery: {id, name, street, city, state, phone, brewery_type}}) => {
+const Brewery = ({brewery: {id, name, street, city, state, phone, brewery_type}, isSelected}) => {
   const navigate = useNavigate();
   return (
-    <CardWrapper>
+    <CardWrapper isSelected={isSelected}>
       <div key={nanoid()} className="card" onClick={()=> navigate(`/brewery/${id}`)}>
         <p>{name}</p>
         <p>{street} {city}, {state}</p>
