@@ -22,9 +22,6 @@ const CardWrapper = styled.div`
   ${props => props.isSelected && css`
   background-color: #85cdd2`}
 `
-//background-color: ${props => props.isSelected?'purple':'#cd9f42'};
-// ${props => props.isSelected && css`
-// color: #85cdd2`}
 
 const Brewery = ({brewery: {id, name, street, city, state, phone, brewery_type}, isSelected}) => {
   const navigate = useNavigate();

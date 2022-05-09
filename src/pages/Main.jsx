@@ -1,8 +1,8 @@
 import React from 'react';
-import { useEffect, useState} from 'react';
 import {usePosition} from 'use-position';
 import { getBreweries, serverData} from '../services/API';
 import { onlyLetters, error } from '../services/Functions';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import Form from '../components/Form';
 import Breweries from '../components/Breweries';
 import Maps from '../components/Maps';
@@ -144,16 +144,14 @@ if(newLocation==''){
   };
 
   const suggestionHandler = (text)=> {
-  setNewLocation(text);
+    setNewLocation(text);
     setSuggestions([]);
   }
 
-  const selectBrewery = (id) => {
-    // setSelected(id);
+  const selectBrewery = useCallback((id) => {
     const match = data.find(brew => brew.id === id);
-    setSelected(match); 
-    console.log(match);
-  }
+    setSelected(match);
+  }, [data])
 
   //grab data from API
   useEffect(() => {
@@ -198,7 +196,7 @@ if(newLocation==''){
   <>
     <MainWrapper>
       <article className='wholeContent'>
-      <Form location={location}  newLocation={newLocation} submit={submit} handleLocationChange={handleLocationChange}
+      <Form location={location} newLocation={newLocation} submit={submit} handleLocationChange={handleLocationChange}
         newSearch={newSearch} handleSearch={handleSearch} resetSearch={resetSearch}
         suggestions={suggestions} suggestionHandler={suggestionHandler} disabled = {disabled}/>
         <section className='contentSection'>
