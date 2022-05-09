@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Map, Overlay } from 'pigeon-maps';
+import { Map, Overlay, Marker } from 'pigeon-maps';
 import { maptiler } from 'pigeon-maps/providers';
 import styled from 'styled-components';
 import beerImg from '../img/beer.png';
@@ -43,7 +43,7 @@ const Maps = ( {data, lng, lat, selectBrewery} ) => {
     }, [lat, lng])
 
     const brewClick = (bname, blng, blat, id) => {
-      setSwitchPages(true);
+        setSwitchPages(true);
         setCurZoom(14);
         setCurLng(parseFloat(blng));
         setCurLat(parseFloat(blat));
@@ -79,7 +79,6 @@ const Maps = ( {data, lng, lat, selectBrewery} ) => {
                 center={[curLat, curLng]}
                 defaultZoom={curZoom}>
                 {renderOverlays()}
-                {/* second overlay */}
             </Map>
         );
         return mapElmt;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState} from 'react';
-import { getBreweries, getYelpData } from '../services/API';
+import { getBreweries } from '../services/API';
 import Form from '../components/Form';
 import Breweries from '../components/Breweries';
 import Maps from '../components/Maps';
@@ -119,7 +119,7 @@ const Main = () => {
   };
 
   const suggestionHandler = (text)=> {
-  setNewLocation(text);
+    setNewLocation(text);
     setSuggestions([]);
   }
 
@@ -127,7 +127,7 @@ const Main = () => {
     // setSelected(id);
     const match = data.find(brew => brew.id === id);
     setSelected(match); 
-    console.log(match);
+    //console.log(match);
   }
 
   //grab data from API
@@ -178,7 +178,7 @@ const Main = () => {
   <>
     <MainWrapper>
       <article className='wholeContent'>
-      <Form location={location}  newLocation={newLocation} submit={submit} handleLocationChange={handleLocationChange}
+      <Form location={location} newLocation={newLocation} submit={submit} handleLocationChange={handleLocationChange}
         newSearch={newSearch} handleSearch={handleSearch} resetSearch={resetSearch}
         suggestions={suggestions} suggestionHandler={suggestionHandler} disabled = {disabled}/>
         <section className='contentSection'>

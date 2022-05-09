@@ -3,9 +3,35 @@ import { useParams , useNavigate} from 'react-router-dom';
 import { getBrewery } from '../services/API';
 import { phoneStyle } from '../services/Functions';
 import styled from 'styled-components';
+import info from '../img/info.png'
 
-const Information = styled.div`
-  background-color: black;
+const InfoWrapper = styled.main`
+  height: 100vh;
+  width: 100vw;
+  background-image: url(${info});
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+`
+
+const TextWrapper = styled.section`
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.75);  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  h1{
+    font-size: 2rem;
+    text-align: center;
+  }
+  p{
+    font-size: 1.5rem;
+    text-align: left;
+    text-transform: capitalize;
+  }
   #phone {
     text-decoration: underline;
   }
@@ -19,6 +45,7 @@ const Info = () => {
   const [brewery, setBrewery] = useState([]);
   const { id } = useParams();
   const {name, street, city, state, phone, website_url, brewery_type} = brewery;
+  
   useEffect(()=> {
     getBrewery(id)
     .then(({data:brewery}) => setBrewery(brewery))
@@ -26,8 +53,9 @@ const Info = () => {
   }, [getBrewery, id]);
   
   return (
-    <Information >
-      <h1>Brewery Info:</h1>
+    <InfoWrapper>
+      <TextWrapper>
+      <h1>Brewery Info</h1>
       <p>
         Name: {name}
         <br/>
@@ -39,7 +67,8 @@ const Info = () => {
         <br/>
         Type of Brewery: {brewery_type}
       </p>
-    </Information>
+      </TextWrapper>
+    </InfoWrapper>
   );
 };
 
