@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams , useNavigate} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getBrewery } from '../services/API';
 import { phoneStyle } from '../services/Functions';
 import styled from 'styled-components';
@@ -41,7 +41,6 @@ const TextWrapper = styled.section`
 `
 
 const Info = () => {
-  const navigate = useNavigate();
   const [brewery, setBrewery] = useState([]);
   const { id } = useParams();
   const {name, street, city, state, phone, website_url, brewery_type} = brewery;

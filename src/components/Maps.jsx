@@ -1,10 +1,10 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Map, Overlay, Marker } from 'pigeon-maps';
+import { Map, Overlay } from 'pigeon-maps';
 import { maptiler } from 'pigeon-maps/providers';
 import styled from 'styled-components';
 import beerImg from '../img/beer.png';
-import {nanoid} from 'nanoid';
+import { nanoid } from 'nanoid';
 import { device } from '../utils/device';
 import { useNavigate } from 'react-router-dom';
 
@@ -91,4 +91,4 @@ const Maps = ( {data, lng, lat, selectBrewery} ) => {
     )                                                                   
 }                                                                           
 
-export default Maps;
+export default React.memo(Maps);

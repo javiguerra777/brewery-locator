@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState} from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { getBreweries } from '../services/API';
 import Form from '../components/Form';
 import Breweries from '../components/Breweries';
@@ -123,12 +123,10 @@ const Main = () => {
     setSuggestions([]);
   }
 
-  const selectBrewery = (id) => {
-    // setSelected(id);
+  const selectBrewery = useCallback((id) => {
     const match = data.find(brew => brew.id === id);
-    setSelected(match); 
-    //console.log(match);
-  }
+    setSelected(match);
+  }, [data])
 
   //grab data from API
   useEffect(() => {
