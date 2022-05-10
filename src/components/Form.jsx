@@ -59,7 +59,6 @@ export const Form = ({location, submit, newLocation, handleLocationChange, newSe
     <FormWrapper>
       <div className='header-container'>
         <h2>Brewery Search For <span id="location">{location ? location : "Crazy Stewie's Favorites"}</span></h2>
-          {/* <p>Search by city, state, or zip</p> */}
       </div>
       <div className='formSection'>
         <form id ='search' onSubmit={submit} >
@@ -80,20 +79,6 @@ export const Form = ({location, submit, newLocation, handleLocationChange, newSe
             )
           })}
           {errorMessage()}
-            {/* <label>
-              Enter State:
-              <input
-              type="text"
-              />
-              <button>Search</button>
-            </label>
-            <label>
-              Enter Zip:
-              <input
-              type="text"
-              />
-              <button>Search</button>
-            </label> */}
         </form>
         <form>
           <label htmlFor='search'>

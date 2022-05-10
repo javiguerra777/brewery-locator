@@ -50,7 +50,7 @@ const Info = () => {
     .then(({data:brewery}) => setBrewery(brewery))
     .catch((err)=> console.log(err));
   }, [getBrewery, id]);
-  console.log(brewery)
+
   return (
     <InfoWrapper>
       <TextWrapper>

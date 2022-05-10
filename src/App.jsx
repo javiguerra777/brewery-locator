@@ -3,7 +3,7 @@ import Main from './pages/Main';
 import Info from './pages/Info';
 import About from './pages/About';
 import NotFound from './pages/NotFound';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {

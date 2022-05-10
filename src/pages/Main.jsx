@@ -1,8 +1,6 @@
 import React from 'react';
-import {usePosition} from 'use-position';
-import { getBreweries, serverData} from '../services/API';
-import { onlyLetters, error } from '../services/Functions';
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
+import { getBreweries } from '../services/API';
 import Form from '../components/Form';
 import Breweries from '../components/Breweries';
 import Maps from '../components/Maps';
@@ -10,6 +8,7 @@ import styled from 'styled-components';
 import brew_bkgd from '../img/brew_bkgd.png';
 import { device } from '../utils/device';
 import { Cities } from '../services/Citydata';
+import Geocode from 'react-geocode';
 
 const MainWrapper = styled.main`
   width: 100vw;
@@ -63,7 +62,6 @@ const MainWrapper = styled.main`
   }
 `
 
-
 const Main = () => {
   let disabled = false;
   const [location, setLocation] = useState(JSON.parse(localStorage.getItem('location')) ||'Fresno');
@@ -74,19 +72,30 @@ const Main = () => {
   const [lat, setLat] = useState(0);
   const [newSearch, setNewSearch] = useState('');
   const [suggestions, setSuggestions] = useState([]);
-  const bannedWords = ['lol', 'hershe', 'ohio'];
- 
+  const [geoLat, setGeoLat] = useState(null);
+  const [geoLng, setGeoLng] = useState(null);
+
+  //apikey
+  Geocode.setApiKey(`${process.env.REACT_APP_API_KEY_GMAP}`)
+
   //functions
-  
-  for(let i in bannedWords){
-    if(newLocation.toLowerCase().includes(bannedWords[i]) || !onlyLetters(newLocation)
-  ){
-    disabled = true;
+  let options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0,
+  };
+  const errors = (err) => {
+    console.warn(`error(${err.code}): ${err.message}`);
   }
-}
-if(newLocation==''){
-  disabled = false;
-}
+  const success = (pos) => {
+    let crd = pos.coords;
+    setGeoLat(`${crd.latitude}`);  // console.log(`lat : ${crd.latitude}`);
+    setGeoLng(`${crd.longitude}`); // console.log(`lng : ${crd.longitude}`);
+  }
+
+  if(newLocation === ''){
+    disabled = false;
+  }
   
   const handleLocationChange = (text) => {
     let matches = [];
@@ -139,15 +148,64 @@ if(newLocation==''){
     setSelected(match);
   }, [data])
 
-  //grab data from API
+  // geolocation prompt -- allow/deny
+  useEffect(() => {
+    if (navigator.geolocation){
+      navigator.permissions
+      .query({ name: 'geolocation' })
+      .then(function (result){
+        if (result.state === 'granted') {
+          navigator.geolocation.getCurrentPosition(success);  // console.log(result.state);
+        } else if(result.state === 'prompt'){
+          navigator.geolocation.getCurrentPosition(success, errors, options);
+        } else if(result.state === 'denied'){
+          //do nothing
+        }
+        result.onchange = function() {
+          console.log(result.state);
+        };
+      });
+    } else {
+      alert('Geolocation feature not available.');
+    }
+  }, []);
+
+  // get user long/lat and set city
+  useEffect(() => {
+    if (geoLat && geoLng){
+      let city;
+      Geocode.fromLatLng(geoLat, geoLng).then(
+        (response) => {
+          // const address = response.results[0].formatted_address;
+          for (let i = 0; i < response.results[0].address_components.length; i++){
+            for (let j = 0; j < response.results[0].address_components[i].types.length; j++){
+              switch (response.results[0].address_components[i].types[j]){
+                case "locality":
+                  city = response.results[0].address_components[i].long_name;
+                  break;
+                default:
+                  //do nothing
+              }
+            }
+          }
+          setLocation(city);
+          localStorage.setItem('location', JSON.stringify(city));
+        },
+        (error) => {
+          console.error(error);
+        }
+      )} 
+  }, [geoLat, geoLng])
+
+  // get breweries api call
   useEffect(() => {
     getBreweries(location)
-    .then((response)=>{
-    setData(response.data);
-    setNewLocation('');
+    .then((response) => {
+      setData(response.data);
+      setNewLocation('');
     })
-    .catch((err)=> console.log(err));
-  },[location])
+    .catch((err)=> console.log(err))
+  }, [location])
   
   //grab data from localstorage
   useEffect(()=> {
@@ -156,6 +214,7 @@ if(newLocation==''){
       setLocation(retrieveLocation);
     }
   },[])
+
   //use effect for default center in map component
   useEffect(() => {
     if(data.length){
@@ -163,18 +222,26 @@ if(newLocation==''){
       let foundLng = '';
       let foundLat = '';
       const allData = data.entries();
-      //loop until find a longitude
-      while (foundLng === '' && foundLat === ''){
-        let nextData = allData.next().value;
-        let tempLng = parseFloat(nextData[1].longitude);
-        let tempLat = parseFloat(nextData[1].latitude);
-        if (!isNaN(tempLng) && !isNaN(tempLat)){
-          foundLng = tempLng;
-          foundLat = tempLat;
-          setLng(foundLng);
-          setLat(foundLat);
+      //loop until find a lat/lng
+        while (foundLng === '' && foundLat === ''){
+          if (typeof(allData.next().value) != 'undefined'){
+            let nextData = allData.next().value;
+            if (typeof(nextData) !== 'undefined'){
+              let tempLng = parseFloat(nextData[1].longitude);
+              let tempLat = parseFloat(nextData[1].latitude);
+              if (!isNaN(tempLng) && !isNaN(tempLat)){
+                foundLng = tempLng;
+                foundLat = tempLat;
+                setLng(foundLng);
+                setLat(foundLat);
+              }
+            }
+          } else{
+            foundLng = lng;
+            foundLat = lat;
+          }
         }
-      }
+      
     }
   }, [data, location]);
 
