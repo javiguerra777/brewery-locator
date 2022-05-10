@@ -1,7 +1,6 @@
 import React from 'react';
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { getBreweries } from '../services/API';
-import { onlyLetters, error } from '../services/Functions';
 import Form from '../components/Form';
 import Breweries from '../components/Breweries';
 import Maps from '../components/Maps';
@@ -65,7 +64,6 @@ const MainWrapper = styled.main`
 
 const Main = () => {
   let disabled = false;
-  const bannedWords = ['lol', 'hershe', 'ohio'];
   const [location, setLocation] = useState(JSON.parse(localStorage.getItem('location')) ||'Fresno');
   const [newLocation, setNewLocation] = useState('');
   const [data, setData] = useState([]);
@@ -91,19 +89,11 @@ const Main = () => {
   }
   const success = (pos) => {
     let crd = pos.coords;
-    console.log(`lat : ${crd.latitude}`);
-    console.log(`lng : ${crd.longitude}`);
-    setGeoLat(`${crd.latitude}`);
-    setGeoLng(`${crd.longitude}`);
+    setGeoLat(`${crd.latitude}`);  // console.log(`lat : ${crd.latitude}`);
+    setGeoLng(`${crd.longitude}`); // console.log(`lng : ${crd.longitude}`);
   }
 
-  for(let i in bannedWords){
-    if(newLocation.toLowerCase().includes(bannedWords[i]) || !onlyLetters(newLocation)
-    ){
-      disabled = true;
-    }
-  }
-  if(newLocation==''){
+  if(newLocation === ''){
     disabled = false;
   }
   
@@ -165,8 +155,7 @@ const Main = () => {
       .query({ name: 'geolocation' })
       .then(function (result){
         if (result.state === 'granted') {
-          console.log(result.state);
-          navigator.geolocation.getCurrentPosition(success);
+          navigator.geolocation.getCurrentPosition(success);  // console.log(result.state);
         } else if(result.state === 'prompt'){
           navigator.geolocation.getCurrentPosition(success, errors, options);
         } else if(result.state === 'denied'){
@@ -233,18 +222,26 @@ const Main = () => {
       let foundLng = '';
       let foundLat = '';
       const allData = data.entries();
-      //loop until find a longitude
-      while (foundLng === '' && foundLat === ''){
-        let nextData = allData.next().value;
-        let tempLng = parseFloat(nextData[1].longitude);
-        let tempLat = parseFloat(nextData[1].latitude);
-        if (!isNaN(tempLng) && !isNaN(tempLat)){
-          foundLng = tempLng;
-          foundLat = tempLat;
-          setLng(foundLng);
-          setLat(foundLat);
+      //loop until find a lat/lng
+        while (foundLng === '' && foundLat === ''){
+          if (typeof(allData.next().value) != 'undefined'){
+            let nextData = allData.next().value;
+            if (typeof(nextData) !== 'undefined'){
+              let tempLng = parseFloat(nextData[1].longitude);
+              let tempLat = parseFloat(nextData[1].latitude);
+              if (!isNaN(tempLng) && !isNaN(tempLat)){
+                foundLng = tempLng;
+                foundLat = tempLat;
+                setLng(foundLng);
+                setLat(foundLat);
+              }
+            }
+          } else{
+            foundLng = lng;
+            foundLat = lat;
+          }
         }
-      }
+      
     }
   }, [data, location]);
 

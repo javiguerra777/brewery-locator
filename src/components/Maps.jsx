@@ -25,8 +25,6 @@ const MapContainer = styled.div`
         width: 77vw;
         height: 100vh;
     }
-
-    
 `
 
 const Maps = ( {data, lng, lat, selectBrewery} ) => {

@@ -4,7 +4,6 @@ const baseUrl = `https://api.openbrewerydb.org/breweries`;
 
 export const getBreweries = (city) => {
   return axios.get(`${baseUrl}?by_city=${city}`);
-  //return axios.get(`${baseUrl}?by_state${state}&by_city${city}`);
 };
 
 export const getBrewery = (id) => {
