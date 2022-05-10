@@ -1,6 +1,7 @@
 import React from 'react';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { getBreweries } from '../services/API';
+import { onlyLetters, error } from '../services/Functions';
 import Form from '../components/Form';
 import Breweries from '../components/Breweries';
 import Maps from '../components/Maps';
@@ -64,7 +65,8 @@ const MainWrapper = styled.main`
 
 const Main = () => {
   let disabled = false;
-  const [location, setLocation] = useState(JSON.parse(localStorage.getItem('location')) ||'Fresno, CA');
+  const bannedWords = ['lol', 'hershe', 'ohio'];
+  const [location, setLocation] = useState(JSON.parse(localStorage.getItem('location')) ||'Fresno');
   const [newLocation, setNewLocation] = useState('');
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
@@ -94,10 +96,17 @@ const Main = () => {
     setGeoLat(`${crd.latitude}`);
     setGeoLng(`${crd.longitude}`);
   }
- 
-  if(newLocation.toLowerCase().includes('lol') || newLocation.toLowerCase().includes('hershe')){
-    disabled = true;
+
+  for(let i in bannedWords){
+    if(newLocation.toLowerCase().includes(bannedWords[i]) || !onlyLetters(newLocation)
+    ){
+      disabled = true;
+    }
   }
+  if(newLocation==''){
+    disabled = false;
+  }
+  
   const handleLocationChange = (text) => {
     let matches = [];
     if(text.length > 0){
@@ -149,6 +158,7 @@ const Main = () => {
     setSelected(match);
   }, [data])
 
+  // geolocation prompt -- allow/deny
   useEffect(() => {
     if (navigator.geolocation){
       navigator.permissions
@@ -171,6 +181,7 @@ const Main = () => {
     }
   }, []);
 
+  // get user long/lat and set city
   useEffect(() => {
     if (geoLat && geoLng){
       let city;
@@ -197,6 +208,7 @@ const Main = () => {
       )} 
   }, [geoLat, geoLng])
 
+  // get breweries api call
   useEffect(() => {
     getBreweries(location)
     .then((response) => {
@@ -213,6 +225,7 @@ const Main = () => {
       setLocation(retrieveLocation);
     }
   },[])
+
   //use effect for default center in map component
   useEffect(() => {
     if(data.length){

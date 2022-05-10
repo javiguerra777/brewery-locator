@@ -39,6 +39,9 @@ const FormWrapper = styled.section`
   button:hover {
     background-color: #85cdd2;
   }
+  button:disabled {
+    background-color: red;
+  }
   .suggestions{
     cursor: pointer;
   }
@@ -49,11 +52,13 @@ const FormWrapper = styled.section`
 `
 
 export const Form = ({location, submit, newLocation, handleLocationChange, newSearch, handleSearch, resetSearch, suggestions, suggestionHandler, disabled}) => {
+  const errorMessage = () => {
+    return  disabled ? <div>Entered invalid value only letters and proper words are allowed </div> : '';
+  }
   return (
     <FormWrapper>
       <div className='header-container'>
         <h2>Brewery Search For <span id="location">{location ? location : "Crazy Stewie's Favorites"}</span></h2>
-          {/* <p>Search by city, state, or zip</p> */}
       </div>
       <div className='formSection'>
         <form id ='search' onSubmit={submit} >
@@ -63,30 +68,17 @@ export const Form = ({location, submit, newLocation, handleLocationChange, newSe
             className='searchInput'
             type="text"
             value={newLocation}
-            placeholder="Fresno, CA"
+            placeholder="Ex: Fresno"
             onChange={e=> handleLocationChange(e.target.value)}
             />   
             <button type='submit' disabled={disabled}>Search</button>
           </label>
           {suggestions && suggestions.map((suggestion, i) => {
           return (
-            <div className='suggestions' key={i} onClick={()=> suggestionHandler(`${suggestion.city}, ${suggestion.state}`)}>{suggestion.city}, {suggestion.state}</div>
-            );
+            <div className='suggestions' key={i} onClick={()=> suggestionHandler(`${suggestion.city}`)}>{suggestion.city}</div>
+            )
           })}
-            {/* <label>
-              Enter State:
-              <input
-              type="text"
-              />
-              <button>Search</button>
-            </label>
-            <label>
-              Enter Zip:
-              <input
-              type="text"
-              />
-              <button>Search</button>
-            </label> */}
+          {errorMessage()}
         </form>
         <form>
           <label htmlFor='search'>
@@ -95,7 +87,7 @@ export const Form = ({location, submit, newLocation, handleLocationChange, newSe
             className='filterInput' 
             type="text"
             id='search'
-            placeholder='Tactical OPS Brewing Inc.'
+            placeholder='Ex: Tactical OPS Brewing Inc.'
             value={newSearch}
             onChange={handleSearch}
             />
@@ -104,7 +96,7 @@ export const Form = ({location, submit, newLocation, handleLocationChange, newSe
         </form>
       </div>
     </FormWrapper>
-  );
+  )
 };
 
 export default Form;
