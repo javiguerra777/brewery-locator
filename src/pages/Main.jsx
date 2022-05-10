@@ -62,11 +62,7 @@ const MainWrapper = styled.main`
     }
   }
 `
-const options = {
-  enableHighAccuracy: true,
-  timeout: 5000,
-  maximumAge: 0
-}
+
 
 const Main = () => {
   let disabled = false;
@@ -79,17 +75,7 @@ const Main = () => {
   const [newSearch, setNewSearch] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const bannedWords = ['lol', 'hershe', 'ohio'];
-  const {latitude, longitude, error} = usePosition({});
-  const [userPosition, setUserPosition] = useState({});
  
-  //gets user location on initial render
-  useEffect(()=> {
-    if(latitude && longitude && !error){
-      setUserPosition({lat:latitude, lon:longitude});
-      console.log(userPosition);
-    }
-  }, []);
-
   //functions
   
   for(let i in bannedWords){
