@@ -1,6 +1,8 @@
 import React from 'react';
+import {usePosition} from 'use-position';
+import { getBreweries, serverData} from '../services/API';
+import { onlyLetters, error } from '../services/Functions';
 import { useEffect, useState, useMemo, useCallback } from 'react';
-import { getBreweries } from '../services/API';
 import Form from '../components/Form';
 import Breweries from '../components/Breweries';
 import Maps from '../components/Maps';
@@ -8,7 +10,6 @@ import styled from 'styled-components';
 import brew_bkgd from '../img/brew_bkgd.png';
 import { device } from '../utils/device';
 import { Cities } from '../services/Citydata';
-import { serverData } from '../services/API';
 
 const MainWrapper = styled.main`
   width: 100vw;
@@ -62,10 +63,10 @@ const MainWrapper = styled.main`
   }
 `
 
+
 const Main = () => {
   let disabled = false;
-  const [location, setLocation] = useState(JSON.parse(localStorage.getItem('location')) ||'Fresno, CA');
-  const fixedLocation = location.split(',');
+  const [location, setLocation] = useState(JSON.parse(localStorage.getItem('location')) ||'Fresno');
   const [newLocation, setNewLocation] = useState('');
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
@@ -73,10 +74,20 @@ const Main = () => {
   const [lat, setLat] = useState(0);
   const [newSearch, setNewSearch] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+  const bannedWords = ['lol', 'hershe', 'ohio'];
+ 
   //functions
-  if(newLocation.toLowerCase().includes('lol') || newLocation.toLowerCase().includes('hershe')){
+  
+  for(let i in bannedWords){
+    if(newLocation.toLowerCase().includes(bannedWords[i]) || !onlyLetters(newLocation)
+  ){
     disabled = true;
   }
+}
+if(newLocation==''){
+  disabled = false;
+}
+  
   const handleLocationChange = (text) => {
     let matches = [];
     if(text.length > 0){
@@ -130,18 +141,13 @@ const Main = () => {
 
   //grab data from API
   useEffect(() => {
-    getBreweries(fixedLocation[0])
+    getBreweries(location)
     .then((response)=>{
     setData(response.data);
     setNewLocation('');
     })
     .catch((err)=> console.log(err));
   },[location])
-  //grabbing data from the Yelp API
-  useEffect(()=> {
-    serverData()
-    .then(response => console.log(response))
-  }, []);
   
   //grab data from localstorage
   useEffect(()=> {

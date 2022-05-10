@@ -23,7 +23,7 @@ const NotFound = () => {
     <FourOhFour>
       <h2>404: Page Not Found!</h2>
     </FourOhFour>
-  );
+  )
 };
 
 export default NotFound;
