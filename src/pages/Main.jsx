@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { getBreweries } from '../services/API';
 import Form from '../components/Form';
 import Breweries from '../components/Breweries';
@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import brew_bkgd from '../img/brew_bkgd.png';
 import { device } from '../utils/device';
 import { Cities } from '../services/Citydata';
-import { serverData } from '../services/API';
+import Geocode from 'react-geocode';
 
 const MainWrapper = styled.main`
   width: 100vw;
@@ -65,7 +65,6 @@ const MainWrapper = styled.main`
 const Main = () => {
   let disabled = false;
   const [location, setLocation] = useState(JSON.parse(localStorage.getItem('location')) ||'Fresno, CA');
-  const fixedLocation = location.split(',');
   const [newLocation, setNewLocation] = useState('');
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState({});
@@ -73,7 +72,29 @@ const Main = () => {
   const [lat, setLat] = useState(0);
   const [newSearch, setNewSearch] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+  const [geoLat, setGeoLat] = useState(null);
+  const [geoLng, setGeoLng] = useState(null);
+
+  //apikey
+  Geocode.setApiKey(`${process.env.REACT_APP_API_KEY_GMAP}`)
+
   //functions
+  let options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0,
+  };
+  const errors = (err) => {
+    console.warn(`error(${err.code}): ${err.message}`);
+  }
+  const success = (pos) => {
+    let crd = pos.coords;
+    console.log(`lat : ${crd.latitude}`);
+    console.log(`lng : ${crd.longitude}`);
+    setGeoLat(`${crd.latitude}`);
+    setGeoLng(`${crd.longitude}`);
+  }
+ 
   if(newLocation.toLowerCase().includes('lol') || newLocation.toLowerCase().includes('hershe')){
     disabled = true;
   }
@@ -128,20 +149,62 @@ const Main = () => {
     setSelected(match);
   }, [data])
 
-  //grab data from API
   useEffect(() => {
-    getBreweries(fixedLocation[0])
-    .then((response)=>{
-    setData(response.data);
-    setNewLocation('');
-    })
-    .catch((err)=> console.log(err));
-  },[location])
-  //grabbing data from the Yelp API
-  useEffect(()=> {
-    serverData()
-    .then(response => console.log(response))
+    if (navigator.geolocation){
+      navigator.permissions
+      .query({ name: 'geolocation' })
+      .then(function (result){
+        if (result.state === 'granted') {
+          console.log(result.state);
+          navigator.geolocation.getCurrentPosition(success);
+        } else if(result.state === 'prompt'){
+          navigator.geolocation.getCurrentPosition(success, errors, options);
+        } else if(result.state === 'denied'){
+          //do nothing
+        }
+        result.onchange = function() {
+          console.log(result.state);
+        };
+      });
+    } else {
+      alert('Geolocation feature not available.');
+    }
   }, []);
+
+  useEffect(() => {
+    if (geoLat && geoLng){
+      let city;
+      Geocode.fromLatLng(geoLat, geoLng).then(
+        (response) => {
+          // const address = response.results[0].formatted_address;
+          for (let i = 0; i < response.results[0].address_components.length; i++){
+            for (let j = 0; j < response.results[0].address_components[i].types.length; j++){
+              switch (response.results[0].address_components[i].types[j]){
+                case "locality":
+                  city = response.results[0].address_components[i].long_name;
+                  break;
+                default:
+                  //do nothing
+              }
+            }
+          }
+          setLocation(city);
+          localStorage.setItem('location', JSON.stringify(city));
+        },
+        (error) => {
+          console.error(error);
+        }
+      )} 
+  }, [geoLat, geoLng])
+
+  useEffect(() => {
+    getBreweries(location)
+    .then((response) => {
+      setData(response.data);
+      setNewLocation('');
+    })
+    .catch((err)=> console.log(err))
+  }, [location])
   
   //grab data from localstorage
   useEffect(()=> {
