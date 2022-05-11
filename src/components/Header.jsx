@@ -8,6 +8,8 @@ const HeaderWrapper = styled.header`
     align-items: center;
     background-color: #cd9f42;
     padding: 1rem 1.5rem;
+    width: 100vw;
+    overflow-x: hidden;
     & > a{
         text-decoration: none;
     }
