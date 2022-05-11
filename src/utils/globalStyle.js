@@ -7,8 +7,11 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     color: #ffffff;
     font-family: 'Playfair Display', serif;
-    overflow: hidden;
   }
+
+html{
+  overflow-x: hidden;
+}
 `;
 
 export default GlobalStyle;

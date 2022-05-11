@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { device } from '../utils/device';
 
 const FormWrapper = styled.section`
   display: flex;
@@ -25,13 +26,13 @@ const FormWrapper = styled.section`
     color: #000000;
   }
   .searchInput{
-    min-width: 222px;
+    min-width: 170px;
   }
   .filterInput{
-    min-width: 200px;
+    min-width: 204px;
   }
   button {
-    min-width: 100px;
+    min-width: 90px;
     background-color: black;
     cursor:pointer;
     margin-left: 10px;
@@ -48,6 +49,18 @@ const FormWrapper = styled.section`
   .suggestions:hover{
     background-color: yellow;
     color: #000000;
+  }
+
+  @media ${device.tablet}{
+    .searchInput{
+      min-width: 222px;
+    }
+    .filterInput{
+      min-width: 256px;
+    }
+    button{
+      min-width: 100px;
+    }
   }
 `
 
@@ -82,12 +95,12 @@ export const Form = ({location, submit, newLocation, handleLocationChange, newSe
         </form>
         <form>
           <label htmlFor='search'>
-            Filter Results:
+            Filter:
             <input
             className='filterInput' 
             type="text"
             id='search'
-            placeholder='Ex: Tactical OPS Brewing Inc.'
+            placeholder='Ex: Sequoia Brewing Co'
             value={newSearch}
             onChange={handleSearch}
             />
